@@ -6,7 +6,7 @@ import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
 import Modal from '../RemoveModal';
 
-export default function Tools() {
+export default function Tools({ tools }) {
     // Define o estado inicial do modal como false
     const [modal, setModal] = useState(false);
 
@@ -16,19 +16,27 @@ export default function Tools() {
     }
 
     return (
-        <Container>
-            <ToolHeader>
-                <h3>Notion</h3>
-                <button type="button" onClick={toggleModal}>
-                    <CloseIcon />
-                    remove
-                </button>
-            </ToolHeader>
-            <ToolInfo>
-                <span>Lorem ipsum indolor</span>
-            </ToolInfo>
-            <ToolTags>#organization</ToolTags>
-            {modal && <Modal toggleModal={toggleModal} />}
-        </Container>
+        <>
+        {tools && tools.map((tool) => (
+            <Container>
+                <ToolHeader>
+                    <h3>{tool.title}</h3>
+                    <button type="button" onClick={toggleModal}>
+                        <CloseIcon />
+                        remove
+                    </button>
+                </ToolHeader>
+                <ToolInfo>
+                    <span>{tool.description}</span>
+                </ToolInfo>
+                <ToolTags>
+                    {tool.tags.map((tag) => (
+                        <span>#{tag}</span>
+                    ))}
+                </ToolTags>
+                {modal && <Modal toggleModal={toggleModal} />}
+            </Container>
+        ))}
+        </>
     );
 }

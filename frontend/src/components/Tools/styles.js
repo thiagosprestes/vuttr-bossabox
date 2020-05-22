@@ -6,6 +6,11 @@ export const Container = styled.section`
     border: 1px solid #ebeaed;
     border-radius: 5px;
     padding: 20px;
+    margin-bottom: 20px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 `;
 
 export const ToolHeader = styled.div`
@@ -52,4 +57,8 @@ export const ToolInfo = styled.div`
 
 export const ToolTags = styled.div`
     font-weight: 600;
+
+    span + span {
+        margin-left: 8px;
+    }
 `;
