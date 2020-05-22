@@ -36,7 +36,7 @@ export default createGlobalStyle`
         background: #244AA8;
     }
 
-    input {
+    input, textarea {
         background: #FFF;
         border: 1px solid #EBEAED;
         border-radius: 5px;

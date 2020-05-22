@@ -19,11 +19,15 @@ export const ToolHeader = styled.div`
         font-size: 20px;
     }
 
-    span {
+    button {
         display: flex;
         align-items: center;
         font-weight: 600;
         color: #f95e5a;
+        background: none;
+        width: unset;
+        border: 0;
+        box-shadow: none;
 
         svg {
             width: 15px;
@@ -35,6 +39,10 @@ export const ToolHeader = styled.div`
                 stroke: #f95e5a;
             }
         }
+    }
+
+    button:hover {
+        background: none;
     }
 `;
 
