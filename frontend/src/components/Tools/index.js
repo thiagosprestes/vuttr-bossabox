@@ -17,26 +17,32 @@ export default function Tools({ tools }) {
 
     return (
         <>
-        {tools && tools.map((tool) => (
-            <Container>
-                <ToolHeader>
-                    <h3>{tool.title}</h3>
-                    <button type="button" onClick={toggleModal}>
-                        <CloseIcon />
-                        remove
-                    </button>
-                </ToolHeader>
-                <ToolInfo>
-                    <span>{tool.description}</span>
-                </ToolInfo>
-                <ToolTags>
-                    {tool.tags.map((tag) => (
-                        <span>#{tag}</span>
+            {tools &&
+                tools
+                    .sort((a, b) => {
+                        return b.id - a.id;
+                    })
+                    .map((tool) => (
+                        <Container key={tool.id}>
+                            <ToolHeader>
+                                <h3>{tool.title}</h3>
+                                <button type="button" onClick={toggleModal}>
+                                    <CloseIcon />
+                                    remove
+                                </button>
+                            </ToolHeader>
+                            <ToolInfo>
+                                <span>{tool.description}</span>
+                            </ToolInfo>
+                            <ToolTags>
+                                {tool.tags &&
+                                    tool.tags.map((tag) => (
+                                        <span key={tag}>#{tag}</span>
+                                    ))}
+                            </ToolTags>
+                            {modal && <Modal toggleModal={toggleModal} />}
+                        </Container>
                     ))}
-                </ToolTags>
-                {modal && <Modal toggleModal={toggleModal} />}
-            </Container>
-        ))}
         </>
     );
 }

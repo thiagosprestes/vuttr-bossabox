@@ -1,13 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Modal } from './styles';
+import { Modal, Alert } from './styles';
 
 import { ReactComponent as PlusIcon } from '../../assets/icon-plus.svg';
 import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
 import { Container } from '../Modal';
 
+import api from '../../services/api';
+
 export default function AddModal({ toggleModal }) {
+    // Define o estado inicial dos inputs com informações da ferramenta
+    const [title, setTitle] = useState('');
+    const [link, setLink] = useState('');
+    const [description, setDescription] = useState('');
+    const [tags, setTags] = useState([]);
+    const [error, setError] = useState('');
+
+    // Cria uma nova ferramenta no backend
+    async function handleAddTool(e) {
+        // Impede o form de executar a ação padrão de submit
+        e.preventDefault();
+
+        // Pega os valores presentes nos estados dos inputs
+        const data = {
+            title,
+            link,
+            description,
+            tags: [tags],
+        };
+
+        try {
+            // Enviando informações para backend
+            await api.post('/tools', data);
+
+            // Fecha modal após envio com sucesso
+            toggleModal();
+
+            // Caso existam erros de tentativas de envio anteriores os apaga
+            setError('');
+
+            // Limpa os campos do formulário
+            setTitle('');
+            setLink('');
+            setDescription('');
+            setTags('');
+        } catch (err) {
+            // Retorna mensagem de erro caso não consiga enviar informações
+            setError('An error occurred on add new tool');
+        }
+    }
+
     return (
         <Container>
             <Modal>
@@ -18,21 +61,45 @@ export default function AddModal({ toggleModal }) {
                         <CloseIcon />
                     </button>
                 </header>
-                <form>
-                    <label htmlFor="name">Tool Name</label>
-                    <input type="text" name="name" id="name" />
+                <form onSubmit={handleAddTool}>
+                    <label htmlFor="title">Tool Name</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
                     <label htmlFor="link">Tool Link</label>
-                    <input type="text" name="link" id="link" />
+                    <input
+                        type="text"
+                        name="link"
+                        id="link"
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                    />
                     <label htmlFor="description">Tool description</label>
                     <textarea
                         name="description"
                         id="description"
                         cols="30"
                         rows="5"
+                        required
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                     <label htmlFor="tags">Tags</label>
-                    <input type="text" name="tags" id="tags" />
-                    <button type="button">Add tool</button>
+                    <input
+                        type="text"
+                        name="tags"
+                        id="tags"
+                        required
+                        value={tags}
+                        onChange={(e) => setTags(e.target.value)}
+                    />
+                    {error && <Alert>{error}</Alert>}
+                    <button type="submit">Add tool</button>
                 </form>
             </Modal>
         </Container>
