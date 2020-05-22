@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { Container, Modal } from './styles';
+import { Modal } from './styles';
 
 import { ReactComponent as PlusIcon } from '../../assets/icon-plus.svg';
 import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
+
+import { Container } from '../Modal';
 
 export default function AddModal({ toggleModal }) {
     return (
