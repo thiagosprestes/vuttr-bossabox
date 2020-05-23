@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
-import { Modal, Alert } from './styles';
+import { useDispatch } from 'react-redux';
+
+import { Modal } from './styles';
 
 import { ReactComponent as PlusIcon } from '../../assets/icon-plus.svg';
 import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
 import { Container } from '../Modal';
+
+import { Alert } from '../Alert';
 
 import api from '../../services/api';
 
@@ -15,7 +19,10 @@ export default function AddModal({ toggleModal }) {
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState([]);
-    const [error, setError] = useState('');
+    const [error, setError] = useState(false);
+
+    //  Define o dispatch do redux
+    const dispatch = useDispatch();
 
     // Cria uma nova ferramenta no backend
     async function handleAddTool(e) {
@@ -38,16 +45,19 @@ export default function AddModal({ toggleModal }) {
             toggleModal();
 
             // Caso existam erros de tentativas de envio anteriores os apaga
-            setError('');
+            setError(false);
 
             // Limpa os campos do formulário
             setTitle('');
             setLink('');
             setDescription('');
             setTags('');
+
+            // Envia a informação de que a lista de ferramentas foi a store
+            dispatch({ type: 'UPDATE_TOOLS', update: true });
         } catch (err) {
             // Retorna mensagem de erro caso não consiga enviar informações
-            setError('An error occurred on add new tool');
+            setError(true);
         }
     }
 
@@ -98,7 +108,7 @@ export default function AddModal({ toggleModal }) {
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
                     />
-                    {error && <Alert>{error}</Alert>}
+                    {error && <Alert>An error occurred on add new tool</Alert>}
                     <button type="submit">Add tool</button>
                 </form>
             </Modal>
