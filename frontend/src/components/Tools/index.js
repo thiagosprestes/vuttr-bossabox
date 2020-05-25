@@ -30,7 +30,19 @@ export default function Tools({ tools }) {
                     .map((tool) => (
                         <Container key={tool.id}>
                             <ToolHeader>
-                                <h3>{tool.title}</h3>
+                                <h3>
+                                    {tool.link ? (
+                                        <a
+                                            href={tool.link}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {tool.title}
+                                        </a>
+                                    ) : (
+                                        tool.title
+                                    )}
+                                </h3>
                                 <button
                                     type="button"
                                     onClick={() =>

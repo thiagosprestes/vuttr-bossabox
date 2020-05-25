@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Container } from './styles';
+import { Container, Message } from './styles';
 
 import Tools from '../../components/Tools';
 
@@ -55,7 +55,13 @@ export default function Home() {
             <h1>VUTTR</h1>
             <h2>Very Useful Tools to Remember</h2>
             <Actions />
-            <Tools tools={tools} />
+            {tools.length > 0 ? (
+                <Tools tools={tools} />
+            ) : (
+                <Message>
+                    <h2>You haven't registered any tools yet</h2>
+                </Message>
+            )}
         </Container>
     );
 }

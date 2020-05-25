@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { Modal } from './styles';
+import { ModalContainer } from './styles';
 
 import { ReactComponent as PlusIcon } from '../../assets/icon-plus.svg';
 import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
-import { Container } from '../Modal';
+import { Container, Modal } from '../Modal';
 
 import { Alert } from '../Alert';
 
@@ -63,54 +63,58 @@ export default function AddModal({ toggleModal }) {
 
     return (
         <Container>
-            <Modal>
-                <header>
-                    <PlusIcon />
-                    <h2>Add new tool</h2>
-                    <button type="button" onClick={toggleModal}>
-                        <CloseIcon />
-                    </button>
-                </header>
-                <form onSubmit={handleAddTool}>
-                    <label htmlFor="title">Tool Name</label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        required
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <label htmlFor="link">Tool Link</label>
-                    <input
-                        type="text"
-                        name="link"
-                        id="link"
-                        value={link}
-                        onChange={(e) => setLink(e.target.value)}
-                    />
-                    <label htmlFor="description">Tool description</label>
-                    <textarea
-                        name="description"
-                        id="description"
-                        cols="30"
-                        rows="5"
-                        required
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <label htmlFor="tags">Tags</label>
-                    <input
-                        type="text"
-                        name="tags"
-                        id="tags"
-                        required
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
-                    />
-                    {error && <Alert>An error occurred on add new tool</Alert>}
-                    <button type="submit">Add tool</button>
-                </form>
+            <Modal modalWidth="50">
+                <ModalContainer>
+                    <header>
+                        <PlusIcon />
+                        <h2>Add new tool</h2>
+                        <button type="button" onClick={toggleModal}>
+                            <CloseIcon />
+                        </button>
+                    </header>
+                    <form onSubmit={handleAddTool}>
+                        <label htmlFor="title">Tool Name</label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            required
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <label htmlFor="link">Tool Link</label>
+                        <input
+                            type="text"
+                            name="link"
+                            id="link"
+                            value={link}
+                            onChange={(e) => setLink(e.target.value)}
+                        />
+                        <label htmlFor="description">Tool description</label>
+                        <textarea
+                            name="description"
+                            id="description"
+                            cols="30"
+                            rows="5"
+                            required
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <label htmlFor="tags">Tags</label>
+                        <input
+                            type="text"
+                            name="tags"
+                            id="tags"
+                            required
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
+                        />
+                        {error && (
+                            <Alert>An error occurred on add new tool</Alert>
+                        )}
+                        <button type="submit">Add tool</button>
+                    </form>
+                </ModalContainer>
             </Modal>
         </Container>
     );

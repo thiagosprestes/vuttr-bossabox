@@ -1,33 +1,11 @@
 import styled from 'styled-components';
 
-export const Modal = styled.div`
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    box-shadow: 0px 20px 25px #0000001a;
-    border-radius: 5px;
-    margin: 5% auto;
-
+export const ModalContainer = styled.div`
     header {
-        display: flex;
-        align-items: center;
-
-        svg {
-            width: 15px;
-            height: 15px;
-            margin-right: 10px;
-
-            path {
-                stroke: #000;
-                fill: #000;
-                stroke-width: 70px;
-            }
-        }
-
-        h2 {
-            font-size: 1.5em;
-            font-weight: 600;
+        svg path {
+            stroke: #000;
+            fill: #000;
+            stroke-width: 70px;
         }
 
         button {

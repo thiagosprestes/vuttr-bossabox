@@ -13,3 +13,29 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
+export const Modal = styled.div`
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: ${(props) => `${props.modalWidth}%`};
+    box-shadow: 0px 20px 25px #0000001a;
+    border-radius: 5px;
+    margin: 5% auto;
+
+    header {
+        display: flex;
+        align-items: center;
+
+        svg {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+    }
+`;

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+import { debounce } from 'lodash';
 
 import { Container, SearchInput, SearchCheckbox } from './styles';
 
@@ -7,20 +9,46 @@ import { ReactComponent as PlusIcon } from '../../assets/icon-plus.svg';
 
 import Modal from '../AddModal';
 
+import api from '../../services/api';
+
 export default function Actions() {
+    // Define o estado inicial do input de busca
+    const [search, setSearch] = useState('');
+
     // Define o estado inicial do modal como false
     const [modal, setModal] = useState(false);
+
+    // Define um tempo de atraso pra alteração do valor de busca
+    const delayedRequest = useRef(
+        debounce((value) => {
+            setSearch(value);
+        }, 1000)
+    ).current;
 
     // Altera o estado do modal, caso true muda para false e vice-versa
     function toggleModal() {
         setModal(!modal);
     }
 
+    // Realiza a busca na api com o valor definido na busca
+    async function filterToolName() {
+        const response = await api.get(`/tools?q=${search}`);
+    }
+
+    // Chama a função que realiza a busca na api toda vez que o valor da busca é alterado
+    useEffect(() => {
+        filterToolName();
+    }, [search]);
+
     return (
         <Container>
             <SearchInput>
                 <SearchIcon />
-                <input type="text" placeholder="Search" />
+                <input
+                    type="text"
+                    placeholder="Search"
+                    onChange={(e) => delayedRequest(e.target.value)}
+                />
             </SearchInput>
             <SearchCheckbox>
                 <input id="search-by-tag" type="checkbox" />

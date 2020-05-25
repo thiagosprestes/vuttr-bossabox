@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Modal } from './styles';
+import { ModalContainer } from './styles';
 
 import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
-import { Container } from '../Modal';
+import { Container, Modal } from '../Modal';
 import { Alert } from '../Alert';
 
 import api from '../../services/api';
@@ -41,29 +41,31 @@ export default function RemoveModal({ closeModal }) {
 
     return (
         <Container>
-            <Modal>
-                <header>
-                    <CloseIcon />
-                    <h2>Remove tool</h2>
-                </header>
-                <p>Are you sure you want to remove {selector.id}?</p>
-                {error && <Alert>An error occurred on delete tool</Alert>}
-                <div>
-                    <button
-                        type="button"
-                        className="cancel"
-                        onClick={closeModal}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="button"
-                        className="confirm"
-                        onClick={handleDelete}
-                    >
-                        Yes, remove
-                    </button>
-                </div>
+            <Modal modalWidth="30">
+                <ModalContainer>
+                    <header>
+                        <CloseIcon />
+                        <h2>Remove tool</h2>
+                    </header>
+                    <p>Are you sure you want to remove {selector.title}?</p>
+                    {error && <Alert>An error occurred on delete tool</Alert>}
+                    <div>
+                        <button
+                            type="button"
+                            className="cancel"
+                            onClick={closeModal}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="button"
+                            className="confirm"
+                            onClick={handleDelete}
+                        >
+                            Yes, remove
+                        </button>
+                    </div>
+                </ModalContainer>
             </Modal>
         </Container>
     );

@@ -14,3 +14,15 @@ export const Container = styled.header`
         font-size: 3em;
     }
 `;
+
+export const Message = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    h2 {
+        font-size: 2rem;
+        color: #848484;
+    }
+`;
