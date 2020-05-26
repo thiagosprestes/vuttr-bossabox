@@ -43,8 +43,8 @@ export default function AddModal({ toggleModal }) {
             // Enviando informações para backend
             await api.post('/tools', data);
 
-            // Fecha modal após envio com sucesso
-            toggleModal();
+            // Envia a informação de que a lista de ferramentas foi a store
+            dispatch(ToolsActions.updateToolsList(true));
 
             // Caso existam erros de tentativas de envio anteriores os apaga
             setError(false);
@@ -55,8 +55,8 @@ export default function AddModal({ toggleModal }) {
             setDescription('');
             setTags('');
 
-            // Envia a informação de que a lista de ferramentas foi a store
-            dispatch(ToolsActions.updateToolsList(true));
+            // Fecha modal após envio com sucesso
+            toggleModal();
         } catch (err) {
             // Retorna mensagem de erro caso não consiga enviar informações
             setError(true);

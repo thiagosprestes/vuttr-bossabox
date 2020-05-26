@@ -36,13 +36,6 @@ export default function Home() {
         setLoading(false);
     }
 
-    // Verifica tamanho do array de ferramentas e caso esteja vazio retorna id a ser apagado como nulo
-    function verifyLength() {
-        if (tools.length <= 0) {
-            dispatch(ToolsActions.deleteToolFromList(null));
-        }
-    }
-
     // Carrega as informações toda vez que o componente é renderizado
     useEffect(() => {
         loadTools();
@@ -50,13 +43,22 @@ export default function Home() {
 
     // Recarrega as informações e verifica se existem ferramentas registradas toda vez que houver uma alteração na store
     useEffect(() => {
+        // Verifica tamanho do array de ferramentas e caso esteja vazio retorna id a ser apagado como nulo
+        function verifyLength() {
+            if (tools.length <= 0) {
+                dispatch(ToolsActions.deleteToolFromList(null));
+            }
+        }
+
         verifyLength();
         loadTools();
-    }, [updateTools]);
+    }, [updateTools, dispatch, tools.length]);
 
     // Remove o item com id presente no store da lista de ferramentas sempre que houver alteração de id
     useEffect(() => {
-        setTools(tools && tools.filter((tool) => tool.id !== deleteTool));
+        setTools((toolsData) =>
+            toolsData.filter((tool) => tool.id !== deleteTool)
+        );
     }, [deleteTool]);
 
     // Altera array de ferramentas com dados retornados da busca

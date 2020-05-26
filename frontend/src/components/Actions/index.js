@@ -35,16 +35,16 @@ export default function Actions() {
         setModal(!modal);
     }
 
-    // Realiza a busca na api com o valor definido na busca
-    async function filterToolName() {
-        const response = await api.get(`/tools?q=${search}`);
-        dispatch(FilterActions.filterByName(response.data));
-    }
-
     // Chama a função que realiza a busca na api toda vez que o valor da busca é alterado
     useEffect(() => {
+        // Realiza a busca na api com o valor definido na busca
+        async function filterToolName() {
+            const response = await api.get(`/tools?q=${search}`);
+            dispatch(FilterActions.filterByName(response.data));
+        }
+
         filterToolName();
-    }, [search]);
+    }, [search, dispatch]);
 
     return (
         <Container>
