@@ -13,6 +13,8 @@ import { Alert } from '../Alert';
 
 import api from '../../services/api';
 
+import * as ToolsActions from '../../store/modules/tools/actions';
+
 export default function AddModal({ toggleModal }) {
     // Define o estado inicial dos inputs com informações da ferramenta
     const [title, setTitle] = useState('');
@@ -54,7 +56,7 @@ export default function AddModal({ toggleModal }) {
             setTags('');
 
             // Envia a informação de que a lista de ferramentas foi a store
-            dispatch({ type: 'UPDATE_TOOLS', update: true });
+            dispatch(ToolsActions.updateToolsList(true));
         } catch (err) {
             // Retorna mensagem de erro caso não consiga enviar informações
             setError(true);

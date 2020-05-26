@@ -8,6 +8,8 @@ import { ReactComponent as CloseIcon } from '../../assets/icon-close.svg';
 
 import Modal from '../RemoveModal';
 
+import * as ToolsActions from '../../store/modules/tools/actions';
+
 export default function Tools({ tools }) {
     const dispatch = useDispatch();
 
@@ -17,7 +19,7 @@ export default function Tools({ tools }) {
     // Altera o estado do modal, caso true muda para false e vice-versa
     function toggleModal(id, title) {
         setModal(!modal);
-        dispatch({ type: 'DELETE_DATA', id, title });
+        dispatch(ToolsActions.selectedToolData(id, title));
     }
 
     return (
@@ -35,7 +37,7 @@ export default function Tools({ tools }) {
                                         <a
                                             href={tool.link}
                                             target="_blank"
-                                            rel="noreferrer"
+                                            rel="noopener noreferrer"
                                         >
                                             {tool.title}
                                         </a>

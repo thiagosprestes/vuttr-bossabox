@@ -11,25 +11,27 @@ import { Alert } from '../Alert';
 
 import api from '../../services/api';
 
+import * as ToolsActions from '../../store/modules/tools/actions';
+
 export default function RemoveModal({ closeModal }) {
     // Define o estado inicial dos erros
     const [error, setError] = useState(false);
 
     const dispatch = useDispatch();
 
-    // Busca informações da ferramenta que estãp salvas no store
-    const selector = useSelector((state) => state.toolData);
+    // Busca informações da ferramenta que estão salvas no store
+    const tool = useSelector((state) => state.tools.tool);
 
     // Apaga a ferramenta de acordo com o id
     async function handleDelete() {
         try {
-            await api.delete(`/tools/${selector.id}`);
+            await api.delete(`/tools/${tool.id}`);
 
             // Limpa os erros em caso de sucesso
             setError(false);
 
             // Envia o id da ferramenta selecionada ao store
-            dispatch({ type: 'DELETE_TOOL', toolId: selector.id });
+            dispatch(ToolsActions.deleteToolFromList(tool.id));
 
             // Fecha o modal
             closeModal();
@@ -47,7 +49,7 @@ export default function RemoveModal({ closeModal }) {
                         <CloseIcon />
                         <h2>Remove tool</h2>
                     </header>
-                    <p>Are you sure you want to remove {selector.title}?</p>
+                    <p>Are you sure you want to remove {tool.title}?</p>
                     {error && <Alert>An error occurred on delete tool</Alert>}
                     <div>
                         <button

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import { debounce } from 'lodash';
 
+import { useDispatch } from 'react-redux';
+
 import { Container, SearchInput, SearchCheckbox } from './styles';
 
 import { ReactComponent as SearchIcon } from '../../assets/icon-search.svg';
@@ -11,7 +13,10 @@ import Modal from '../AddModal';
 
 import api from '../../services/api';
 
+import * as FilterActions from '../../store/modules/filter/actions';
+
 export default function Actions() {
+    const dispatch = useDispatch();
     // Define o estado inicial do input de busca
     const [search, setSearch] = useState('');
 
@@ -33,6 +38,7 @@ export default function Actions() {
     // Realiza a busca na api com o valor definido na busca
     async function filterToolName() {
         const response = await api.get(`/tools?q=${search}`);
+        dispatch(FilterActions.filterByName(response.data));
     }
 
     // Chama a função que realiza a busca na api toda vez que o valor da busca é alterado

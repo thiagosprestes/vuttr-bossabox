@@ -10,15 +10,21 @@ import Actions from '../../components/Actions';
 
 import api from '../../services/api';
 
+import * as ToolsActions from '../../store/modules/tools/actions';
+
 export default function Home() {
     // Define o estado inicial do array de ferramentas
     const [tools, setTools] = useState([]);
 
+    // Define o estado de carregamento
+    const [loading, setLoading] = useState(true);
+
     const dispatch = useDispatch();
 
     // Recebe as informações da store
-    const updateTools = useSelector((state) => state.data);
-    const deleteTool = useSelector((state) => state.id);
+    const updateTools = useSelector((state) => state.tools.update);
+    const deleteTool = useSelector((state) => state.tools.id);
+    const filteredData = useSelector((state) => state.filter.data);
 
     // Faz uma requisição ao backend para trazer todos os dados das ferramentas
     async function loadTools() {
@@ -26,11 +32,14 @@ export default function Home() {
 
         // Armazena as informações em um estado
         setTools(response.data);
+
+        setLoading(false);
     }
 
+    // Verifica tamanho do array de ferramentas e caso esteja vazio retorna id a ser apagado como nulo
     function verifyLength() {
         if (tools.length <= 0) {
-            dispatch({ type: 'DELETE_TOOL', toolId: null });
+            dispatch(ToolsActions.deleteToolFromList(null));
         }
     }
 
@@ -50,17 +59,22 @@ export default function Home() {
         setTools(tools && tools.filter((tool) => tool.id !== deleteTool));
     }, [deleteTool]);
 
+    // Altera array de ferramentas com dados retornados da busca
+    useEffect(() => {
+        setTools(filteredData);
+    }, [filteredData]);
+
     return (
         <Container>
             <h1>VUTTR</h1>
             <h2>Very Useful Tools to Remember</h2>
             <Actions />
-            {tools.length > 0 ? (
-                <Tools tools={tools} />
-            ) : (
+            {loading ? (
                 <Message>
-                    <h2>You haven't registered any tools yet</h2>
+                    <h2>Loading...</h2>
                 </Message>
+            ) : (
+                <Tools tools={tools} />
             )}
         </Container>
     );
