@@ -1,7 +1,7 @@
-export function updateToolsList(updateState) {
+export function newTool(toolData) {
     return {
-        type: 'UPDATE_TOOLS',
-        updateState,
+        type: 'ADD_TOOL',
+        toolData,
     };
 }
 

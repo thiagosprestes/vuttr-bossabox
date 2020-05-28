@@ -41,10 +41,10 @@ export default function AddModal({ toggleModal }) {
 
         try {
             // Enviando informações para backend
-            await api.post('/tools', data);
+            const response = await api.post('/tools', data);
 
             // Envia a informação de que a lista de ferramentas foi a store
-            dispatch(ToolsActions.updateToolsList(true));
+            dispatch(ToolsActions.newTool(response.data));
 
             // Caso existam erros de tentativas de envio anteriores os apaga
             setError(false);

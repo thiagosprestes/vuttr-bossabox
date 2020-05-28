@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -22,7 +22,7 @@ export default function Home() {
     const dispatch = useDispatch();
 
     // Recebe as informações da store
-    const updateTools = useSelector((state) => state.tools.update);
+    const updateTools = useSelector((state) => state.tools.newTool);
     const deleteTool = useSelector((state) => state.tools.id);
     const filteredData = useSelector((state) => state.filter.data);
 
@@ -36,12 +36,18 @@ export default function Home() {
         setLoading(false);
     }
 
+    // Atualiza lista de ferramentas cadastradas quando uma nova é adicionada
+    const updateToolsList = useCallback(
+        () => setTools((toolsList) => [...toolsList, updateTools]),
+        [updateTools]
+    );
+
     // Carrega as informações toda vez que o componente é renderizado
     useEffect(() => {
         loadTools();
     }, []);
 
-    // Recarrega as informações e verifica se existem ferramentas registradas toda vez que houver uma alteração na store
+    // Verifica se existem ferramentas registradas toda vez que houver uma alteração na store
     useEffect(() => {
         // Verifica tamanho do array de ferramentas e caso esteja vazio retorna id a ser apagado como nulo
         function verifyLength() {
@@ -53,8 +59,8 @@ export default function Home() {
         }
 
         verifyLength();
-        loadTools();
-    }, [updateTools, dispatch]);
+        updateToolsList();
+    }, [updateTools, dispatch, updateToolsList]);
 
     // Remove o item com id presente no store da lista de ferramentas sempre que houver alteração de id
     useEffect(() => {
