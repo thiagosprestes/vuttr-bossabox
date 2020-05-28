@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 
 import { debounce } from 'lodash';
 
@@ -17,34 +17,38 @@ import * as FilterActions from '../../store/modules/filter/actions';
 
 export default function Actions() {
     const dispatch = useDispatch();
-    // Define o estado inicial do input de busca
-    const [search, setSearch] = useState('');
 
     // Define o estado inicial do modal como false
     const [modal, setModal] = useState(false);
 
-    // Define um tempo de atraso pra alteração do valor de busca
-    const delayedRequest = useRef(
-        debounce((value) => {
-            setSearch(value);
-        }, 1000)
-    ).current;
+    // Define o estado inicial do checkbox
+    const [checked, setChecked] = useState(false);
 
     // Altera o estado do modal, caso true muda para false e vice-versa
     function toggleModal() {
         setModal(!modal);
     }
 
-    // Chama a função que realiza a busca na api toda vez que o valor da busca é alterado
-    useEffect(() => {
-        // Realiza a busca na api com o valor definido na busca
-        async function filterToolName() {
-            const response = await api.get(`/tools?q=${search}`);
+    // Realiza a busca na api com o valor definido na busca
+    async function filterToolName(searchTerm) {
+        if (!checked) {
+            const response = await api.get(`/tools?q=${searchTerm}`);
+            dispatch(FilterActions.filterByName(response.data));
+        } else {
+            const response = await api.get(`/tools?tags_like=${searchTerm}`);
             dispatch(FilterActions.filterByName(response.data));
         }
+    }
 
-        filterToolName();
-    }, [search, dispatch]);
+    // Define um tempo de atraso pra alteração do valor de busca
+    const delayedRequest = debounce((value) => {
+        filterToolName(value);
+    }, 1000);
+
+    // Altera o estado do checkbox
+    function handleCheck() {
+        setChecked(!checked);
+    }
 
     return (
         <Container>
@@ -57,7 +61,11 @@ export default function Actions() {
                 />
             </SearchInput>
             <SearchCheckbox>
-                <input id="search-by-tag" type="checkbox" />
+                <input
+                    id="search-by-tag"
+                    type="checkbox"
+                    onChange={handleCheck}
+                />
                 <span />
                 <p>search in tags only</p>
             </SearchCheckbox>

@@ -45,14 +45,16 @@ export default function Home() {
     useEffect(() => {
         // Verifica tamanho do array de ferramentas e caso esteja vazio retorna id a ser apagado como nulo
         function verifyLength() {
-            if (tools.length <= 0) {
+            const toolsLength = (toolsData) => toolsData.length;
+
+            if (toolsLength <= 0) {
                 dispatch(ToolsActions.deleteToolFromList(null));
             }
         }
 
         verifyLength();
         loadTools();
-    }, [updateTools, dispatch, tools.length]);
+    }, [updateTools, dispatch]);
 
     // Remove o item com id presente no store da lista de ferramentas sempre que houver alteração de id
     useEffect(() => {
