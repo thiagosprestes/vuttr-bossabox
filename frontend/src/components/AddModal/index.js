@@ -36,7 +36,7 @@ export default function AddModal({ toggleModal }) {
             title,
             link,
             description,
-            tags: [tags],
+            tags: tags.split(' '),
         };
 
         try {
