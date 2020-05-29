@@ -29,26 +29,34 @@ export const ModalContainer = styled.div`
         padding: 20px 20px 0;
 
         label {
-            margin-bottom: 10px;
+            margin: 10px 0 10px;
             font-weight: 600;
         }
 
-        input,
-        textarea {
-            margin-bottom: 20px;
-            background: #f5f4f6;
-            border: 1px solid #ebeaed;
-            box-shadow: none;
-        }
-
-        input:focus,
-        textarea:focus {
-            background: #ebeaed;
-            border: 1px solid #dedce1;
+        span {
+            color: #f95e5a;
+            margin-left: auto;
         }
 
         button {
             margin-left: auto;
         }
+    }
+`;
+
+export const Input = styled.input`
+    margin-bottom: 5px;
+    background: ${(props) => (props.error ? '#FEEFEE' : '#f5f4f6')};
+    border: 1px solid #ebeaed;
+    border-color: ${(props) => (props.error ? '#F95E5A' : '#ebeaed')};
+    box-shadow: none;
+
+    &:focus {
+        background: #ebeaed;
+        border: 1px solid #dedce1;
+    }
+
+    ::placeholder {
+        color: ${(props) => (props.error ? '#f95e5a' : '')};
     }
 `;
