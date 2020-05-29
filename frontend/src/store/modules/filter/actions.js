@@ -4,3 +4,10 @@ export function filterByName(data) {
         data,
     };
 }
+
+export function inputValue(value) {
+    return {
+        type: 'INPUT_VALUE',
+        value,
+    };
+}

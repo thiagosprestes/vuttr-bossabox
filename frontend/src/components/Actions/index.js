@@ -43,6 +43,11 @@ export default function Actions() {
     // Define um tempo de atraso pra alteração do valor de busca
     const delayedRequest = debounce((value) => {
         filterToolName(value);
+        if (checked) {
+            dispatch(FilterActions.inputValue(value));
+        } else {
+            dispatch(FilterActions.inputValue(''));
+        }
     }, 1000);
 
     // Altera o estado do checkbox

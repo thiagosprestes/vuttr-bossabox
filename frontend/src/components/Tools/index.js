@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, ToolHeader, ToolInfo, ToolTags } from './styles';
 
@@ -21,6 +21,8 @@ export default function Tools({ tools }) {
         setModal(!modal);
         dispatch(ToolsActions.selectedToolData(id, title));
     }
+
+    const inputValue = useSelector((state) => state.filter.inputValue);
 
     return (
         <>
@@ -61,7 +63,16 @@ export default function Tools({ tools }) {
                             <ToolTags>
                                 {tool.tags &&
                                     tool.tags.map((tag) => (
-                                        <span key={tag}>#{tag}</span>
+                                        <span
+                                            key={tag}
+                                            style={{
+                                                background:
+                                                    inputValue === tag &&
+                                                    '#f7d917',
+                                            }}
+                                        >
+                                            #{tag}
+                                        </span>
                                     ))}
                             </ToolTags>
                         </Container>
