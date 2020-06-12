@@ -14,15 +14,11 @@ Very Useful Tools to Remember
 
 ## 📃 Sobre o projeto
 
-<hr />
-
 Aplicação web proposta como desafio de front-end pela <a href="https://bossabox.com" target="_blank">BossaBox</a> onde objetivo é desenvolver um web app que seja capaz de armazenar informações sobre ferramentas úteis para desenvolvedores com seus respectivos nomes, links, descrições e tags, listar estas informações, filtra-las por nome e tags e apagá-las.
 
 O front-end foi desenvolvido com ReactJS e Redux, o back-end base foi fornecido junto com o desafio e utiliza JSON Server para simular uma API REST.
 
 ## 🚀 Tecnologias utilizadas
-
-<hr />
 
 - ⚛️ **ReactJS** — Web app
 - 📋 **Formik** — Formulário de cadastro de uma ferramenta
@@ -31,12 +27,7 @@ O front-end foi desenvolvido com ReactJS e Redux, o back-end base foi fornecido 
 - 🖼 **Redux** — Armazenamento de estado dos componentes
 - 💅 **Styled components** — Estilização dos componentes
 
-
-
-
 ## 💻 Rodando a aplicação
-
-<hr />
 
 A aplicação é dividida em duas partes, front-end e back-end, o front-end precisa que o back-end esteja sendo executado para funcionar.
 
@@ -47,8 +38,6 @@ A aplicação é dividida em duas partes, front-end e back-end, o front-end prec
 - Yarn
 
 ### Rodando o back-end
-
-<hr>
 
 Clone o repositório
 
@@ -74,8 +63,6 @@ npx json-server db.json -p 3333
 ```
 
 ### Rodando o front-end
-
-<hr>
 
 Caso já tenha clonado o repositório basta pular a primeira etapa
 
